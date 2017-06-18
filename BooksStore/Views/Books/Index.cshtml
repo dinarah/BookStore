@@ -1,0 +1,91 @@
+﻿@using Mvc.Placeholders.Helpers
+
+@model List<BooksStore.Models.Book>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Our Bookstore</h2>
+<p>
+    @Html.ActionLink("Add new book", "New", null, new { @class = "btn btn-default" })
+</p>
+
+<h4>Search by name</h4>
+@using (Html.BeginForm("SearchByName", "Books"))
+{
+    <p>
+        Search by name: @Html.TextBox("searchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<h4>Search by date interval</h4>
+@using (Html.BeginForm("SearchByYearInterval", "Books"))
+{
+    <p>
+        Begin: @Html.TextBox("beginYear")
+        End: @Html.TextBox("endYear")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<h4>Search by price</h4>
+@using (Html.BeginForm("SearchByPrice", "Books"))
+{
+    <p>
+        From: @Html.TextBox("priceFrom")
+        To: @Html.TextBox("priceTo")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<h4>Search by <=</h4>
+@using (Html.BeginForm("SearchLessThan", "Books"))
+{
+    <p>
+        Under: @Html.TextBox("priceLessThan")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<h4>Search by >=</h4>
+@using (Html.BeginForm("SearchStartingFrom", "Books"))
+{
+    <p>
+        From: @Html.TextBox("priceStartingFrom")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table table-hover">
+    <thead> 
+        <tr> 
+           <th>ID</th>
+           <th>Cover</th>
+           <th>Name</th>
+           <th>Author</th>
+           <th>Year</th>
+           <th>Month</th>
+           <th>Price</th>
+           <th></th>
+           <th></th>
+       </tr>
+    </thead>
+    <tbody>
+           @foreach (var book in Model)
+           {
+               <tr>
+                   <td>@book.Id</td>
+                   <td><img src="@book.CoverUrl" width="200"/></td>
+                   <td>@book.Name</td>
+                   <td>@book.Author</td>
+                   <td>@book.Year</td>
+                   <td>@book.Month</td>
+                   <td>@book.Price.ToString("C2")</td>
+                   <td>@Html.ActionLink("Edit", "Edit", new { id = book.Id })</td>
+                   <td>@Html.ActionLink("Delete", "Delete", new { id = book.Id })</td>
+               </tr>
+           }
+     </tbody>
+</table>
+
